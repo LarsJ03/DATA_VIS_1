@@ -1,0 +1,21 @@
+---
+title: "DATA_VIS_1"
+output: html_document
+date: "2022-11-21"
+---
+
+```{r setup, include = FALSE}
+# Loading of Dataset
+student <- read.csv(file = "C:/Users/lars2/Documents/datasets/SBE/Data_Vis/student.csv",
+                  stringsAsFactors = FALSE)
+
+student
+str(student)
+summary(student)
+```
+
+
+``` {r}
+missing_churn <- is.na.data.frame(churn)
+which(missing_churn)
+```
