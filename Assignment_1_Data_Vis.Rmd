@@ -12,6 +12,11 @@ student_all <- read.csv(file = "C:/SBE/Data_vis/DATA_VIS_1/data/student.csv",
 student_all
 str(student_all)
 summary(student_all)
+
+install.packages("corrplot")
+library(corrplot)
+
+
 ```
 ```{r}
 set.seed(32)
@@ -45,7 +50,15 @@ hist(variable_stats,
 ``` 
 ## Show important relationships to target variable -- STATS
 ```{r}
+student$pass_or_fail = student$g3
 
+for (i in 1:length(student$g3)) {
+  if(student$g3[i] >= 11)
+   student$pass_or_fail[i] = 'passed'
+  if(student$g3[i] < 11)
+   student$pass_or_fail[i] = 'failed'
+     
+}
 
 ```
 ## Show important realtionships to target variable -- VISUAL
@@ -55,10 +68,44 @@ hist(variable_stats,
 ```
 ## Correlation Analysis -- Numerical
 ```{r}
+# Collect variables of interest
+corrdata <- cbind(student$age,
+                  student$medu,
+                  student$fedu,
+                  student$traveltime,
+                  student$studytime,
+                  student$failures,
+                  student$famrel,
+                  student$freetime,
+                  student$goout,
+                  student$dalc,
+                  student$walc,
+                  student$health,
+                  student$absences,
+                  student$g1,
+                  student$g2,
+                  student$g3)
+# Declare the matrix
+corrpvalues <- matrix(rep(0, 25),
+ncol = 5)
+# Fill the matrix with correlations
+for (i in 1:4) {
+for (j in (i+1):5) {
+corrpvalues[i,j] <- corrpvalues[j,i] <-
+round(cor.test(corrdata[,i],
+corrdata[,j])$p.value,
+4)
+}
+}
 
-
+cor_matrix = cor(corrdata)
+rownames(cor_matrix) <- c("age","medu","fedu","traveltime","studytime","failures","famrel","freetime","goout","dalc","walc","health","absences","g1","g2","g3")
+colnames(cor_matrix) <- c("age","medu","fedu","traveltime","studytime","failures","famrel","freetime","goout","dalc","walc","health","absences","g1","g2","g3")
+corrplot(cor_matrix, method="number", col.lab = "black")
 ```
 ## Frequency Analysis -- Categorical
+
+
 
 ## Interpetation
 
