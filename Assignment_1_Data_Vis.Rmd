@@ -6,16 +6,41 @@ date: "2022-11-21"
 
 ```{r setup, include = FALSE}
 # Loading of Dataset
-student <- read.csv(file = "C:/Users/lars2/Documents/datasets/SBE/Data_Vis/student.csv",
+student_all <- read.csv(file = "C:/SBE/Data_vis/DATA_VIS_1/data/student.csv",
                   stringsAsFactors = FALSE)
 
-student
-str(student)
-summary(student)
+student_all
+str(student_all)
+summary(student_all)
 ```
-
-
+```{r}
+set.seed(32)
+student = student_all[sample(nrow(student_all), size = 600),]
+```
+## Check for Missing values
 ``` {r}
-missing_churn <- is.na.data.frame(churn)
-which(missing_churn)
+missing_student <- is.na.data.frame(student)
+which(missing_student)
 ```
+## Identify outliers using numerical method
+```{r}
+variable_stats = student$g3
+IQR_data <- c(summary(variable_stats))
+names(IQR_data) <- NULL
+IQR_Q3 <- IQR_data[5]
+IQR_Q1 <- IQR_data[2]
+IQR <- IQR_Q3 - IQR_Q1
+normal_data_range_lower <- IQR_Q1 - 1.5 * IQR
+normal_data_range_higher <- IQR_Q3 + 1.5 * IQR
+IQR.outliers <- (0:19) > normal_data_range_higher | (0:19) < normal_data_range_lower
+names(IQR.outliers) <- c(0:19)
+IQR.outliers
+
+hist(variable_stats,
+     col = "darkred",
+     border = "black",
+     xlab = "Grade",
+     ylab = "Frequency",
+     main = "Histogram of Grades all Students")
+``` 
+
