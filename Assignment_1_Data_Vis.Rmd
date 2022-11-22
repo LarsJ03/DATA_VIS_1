@@ -43,4 +43,24 @@ hist(variable_stats,
      ylab = "Frequency",
      main = "Histogram of Grades all Students")
 ``` 
+## Show important relationships to target variable -- STATS
+```{r}
+
+
+```
+## Show important realtionships to target variable -- VISUAL
+```{r}
+
+
+```
+## Correlation Analysis -- Numerical
+```{r}
+
+
+```
+## Frequency Analysis -- Categorical
+
+## Interpetation
+
+## Summary/Conclusion 
 
